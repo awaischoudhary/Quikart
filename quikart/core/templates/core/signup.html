@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center">
+    <div class="w-full sm:w-2/3 md:w-1/2 lg:w-1/2 xl:w-1/2 bg-gray-100 p-8 rounded-lg shadow-md mt-4">
+        <h1 class="mb-6 text-4xl font-semibold text-center text-gray-500" style="font-family: 'Arial', sans-serif;">Sign Up</h1>
+
+        <form method="post" action=".">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label for="username" class="block text-sm text-gray-600 mb-2">Username</label>
+                <input type="text" id="username" name="username" class="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-sm text-gray-600 mb-2">Email</label>
+                {{ form.email }}
+            </div>
+
+            <div class="mb-4">
+                <label for="password1" class="block text-sm text-gray-600 mb-2">Password</label>
+                {{ form.password1 }}
+            </div>
+
+            <div class="mb-4">
+                <label for="password2" class="block text-sm text-gray-600 mb-2">Repeat password</label>
+                {{ form.password2 }}
+            </div>
+
+            {% if form.errors or form.non_field_errors %}
+                <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
+
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button class="w-full py-3 px-4 text-lg bg-gray-500 hover:bg-gray-700 hover:bg-opacity-90 rounded-lg text-white font-semibold" style="font-family: 'Arial', sans-serif;">Create an Account</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

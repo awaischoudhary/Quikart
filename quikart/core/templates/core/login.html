@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center">
+    <div class="w-full sm:w-2/3 md:w-1/2 lg:w-1/2 xl:w-1/2 bg-gray-100 p-8 rounded-lg shadow-md mt-4">
+        <h1 class="mb-6 text-4xl font-semibold text-center text-blue-500" style="font-family: 'Arial', sans-serif;">Welcome Back</h1>
+
+        <form method="post" action=".">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="block text-sm text-gray-600 mb-2">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm text-gray-600 mb-2">Password</label>
+                {{ form.password }}
+            </div>
+
+            {% if form.errors or form.non_field_errors %}
+                <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
+
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button class="w-full py-3 px-4 text-lg bg-blue-500 bg-opacity-75 hover:bg-blue-700 hover:bg-opacity-90 rounded-lg text-white font-semibold" style="font-family: 'Arial', sans-serif;">Log In</button>
+        </form>
+
+        <p class="mt-4 text-gray-600 text-center">Don't have an account? <a href="{% url 'core:signup' %}" class="text-blue-500 hover:underline">Sign Up</a></p>
+    </div>
+</div>
+{% endblock %}

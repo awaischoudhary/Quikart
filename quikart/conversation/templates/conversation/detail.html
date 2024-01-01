@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Conversation{% endblock %}
+
+{% block content %}
+    <div class="mt-8 px-8 py-12 bg-gray-100 rounded-xl shadow-md">
+        <h2 class="mb-8 text-3xl font-bold text-gray-800 text-center">Conversation</h2>
+
+        <div class="space-y-6">
+            {% for message in conversation.messages.all %}
+                <div class="p-6 flex {% if message.created_by == request.user %}justify-end items-end{% else %}justify-start items-end{% endif %} {% if message.created_by != request.user %}bg-gray-300{% else %}bg-blue-500 text-white{% endif %} rounded-xl">
+                    <div>
+                        <p class="mb-2 text-xs {% if message.created_by != request.user %}text-gray-700{% else %}text-white{% endif %}">{{ message.created_by.username }} | {{ message.created_at|date:"F d, Y H:i" }}</p>
+                        <p class="whitespace-pre-line">{{ message.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="post" action="." class="mt-6">
+            {% csrf_token %}
+
+            <textarea name="content" rows="3" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" placeholder="Type your message..."></textarea>
+
+            <button class="mt-4 py-2 px-4 text-lg bg-blue-700 hover:bg-blue-800 rounded-md text-white">Send</button>
+        </form>
+    </div>
+{% endblock %}
